@@ -1,0 +1,104 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* General App Styling */
+.stApp {
+    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    color: #333333;
+    /* Ensure main text is dark enough */
+}
+
+/* Titles and Headers */
+h1,
+h2,
+h3,
+.stMarkdown h1,
+.stMarkdown h2,
+.stMarkdown h3 {
+    color: #111111 !important;
+    /* Almost black for headers */
+    font-weight: 700;
+}
+
+p,
+.stMarkdown p {
+    color: #333333;
+    line-height: 1.6;
+}
+
+/* Custom Card Container */
+.css-1r6slb0 {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    border: 1px solid #e9ecef;
+    /* Subtle border for definition */
+}
+
+/* Input Fields */
+.stTextInput>div>div>input {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #212529;
+    /* Dark text for inputs */
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.stTextInput>div>div>input:focus {
+    border-color: #0077b5;
+    /* LinkedIn Blue */
+    box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.15);
+    outline: none;
+}
+
+.stTextInput label {
+    color: #495057 !important;
+    /* Dark gray for labels */
+    font-weight: 600;
+}
+
+/* Buttons */
+.stButton>button {
+    background: linear-gradient(135deg, #0077b5 0%, #005582 100%);
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+.stButton>button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+    color: white !important;
+}
+
+.stButton>button:active {
+    transform: translateY(0);
+}
+
+/* Success/Error Messages */
+.stAlert {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Output Area */
+.stTextArea>div>div>textarea {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #212529;
+}

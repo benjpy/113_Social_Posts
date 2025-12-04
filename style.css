@@ -66,7 +66,8 @@ p,
 /* Buttons */
 .stButton>button {
     background: linear-gradient(135deg, #0077b5 0%, #005582 100%);
-    color: white !important;
+    color: #ffffff !important;
+    /* Force white text */
     border: none;
     border-radius: 8px;
     padding: 0.75rem 2rem;
@@ -80,7 +81,8 @@ p,
 .stButton>button:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
-    color: white !important;
+    color: #ffffff !important;
+    /* Force white text on hover too */
 }
 
 .stButton>button:active {

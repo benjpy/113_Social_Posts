@@ -30,15 +30,10 @@ with st.container():
     
     with col1:
         st.subheader("1. The Persona")
-        person_name = st.text_input(
-            "Person's Name",
-            placeholder="e.g. Paul Graham",
-            help="Name of the person whose style you want to mimic."
-        )
-        person_url = st.text_input(
-            "Profile or Blog URL",
-            placeholder="e.g. https://paulgraham.com/articles.html",
-            help="URL to a page with text written by the person you want to mimic."
+        persona_choice = st.radio(
+            "Select Persona",
+            ("Sean O'Sullivan", "Po Bronson"),
+            help="Choose the writing style you want to mimic."
         )
 
     with col2:
@@ -53,24 +48,35 @@ with st.container():
 
 # Logic
 if generate_btn:
-    if not person_url or not article_url or not person_name:
-        st.error("Please provide Name, Persona URL, and Article URL.")
+    if not article_url:
+        st.error("Please provide the Source Article URL.")
     elif not os.getenv("GEMINI_API_KEY"):
         st.error("⚠️ GEMINI_API_KEY not found. Please check your .env file.")
     else:
-        with st.spinner("🔍 Analyzing style and reading content..."):
-            # Fetch content
-            person_text = utils.fetch_text_from_url(person_url)
+        with st.spinner("🔍 Reading persona and content..."):
+            # Determine file to read
+            if persona_choice == "Sean O'Sullivan":
+                filename = "sean.txt"
+            else:
+                filename = "po.txt"
+            
+            # Read persona file
+            try:
+                with open(filename, "r") as f:
+                    person_text = f.read()
+            except FileNotFoundError:
+                st.error(f"Error: Could not find {filename}. Please ensure it exists in the project directory.")
+                st.stop()
+
+            # Fetch article content
             article_text = utils.fetch_text_from_url(article_url)
             
-            if "Error" in person_text:
-                st.error(f"Could not read Persona URL: {person_text}")
-            elif "Error" in article_text:
+            if "Error" in article_text:
                 st.error(f"Could not read Source URL: {article_text}")
             else:
                 # Generate
-                with st.spinner(f"🤖 Crafting post in {person_name}'s style..."):
-                    post_content = utils.generate_linkedin_post(person_text, article_text, person_name)
+                with st.spinner(f"🤖 Crafting post in {persona_choice}'s style..."):
+                    post_content = utils.generate_linkedin_post(person_text, article_text, persona_choice)
                     
                     if "Error" in post_content:
                         st.error(post_content)

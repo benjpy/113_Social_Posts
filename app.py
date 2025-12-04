@@ -43,8 +43,8 @@ with st.container():
             placeholder="e.g. https://techcrunch.com/...",
             help="URL to the article you want to rewrite."
         )
-
-    generate_btn = st.button("✨ Generate Post")
+        st.write("") # Add a little spacing
+        generate_btn = st.button("✨ Generate Post")
 
 # Logic
 if generate_btn:
@@ -83,7 +83,7 @@ if generate_btn:
                     else:
                         st.success("Post generated successfully!")
                         st.subheader("Your Draft")
-                        st.text_area("Copy your post below:", value=post_content, height=400)
+                        st.code(post_content, language="markdown")
                         st.balloons()
 
 # Footer

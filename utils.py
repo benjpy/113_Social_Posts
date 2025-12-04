@@ -71,6 +71,7 @@ def generate_linkedin_post(person_text, article_text, person_name):
     - Include relevant hashtags if the style reference uses them.
     - Keep it engaging and hook-y.
     - **CRITICAL**: Do NOT have the author introduce themselves (e.g., do NOT say "Hi, I'm {person_name}"). Just dive straight into the value/content.
+    - **Emojis**: Use emojis lightly and thoughtfully. Do not overuse them. Place them strategically to emphasize key points or add tone, but keep it professional and aligned with the persona.
     """
 
     try:

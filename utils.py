@@ -72,6 +72,7 @@ def generate_linkedin_post(person_text, article_text, person_name):
     - Keep it engaging and hook-y.
     - **CRITICAL**: Do NOT have the author introduce themselves (e.g., do NOT say "Hi, I'm {person_name}"). Just dive straight into the value/content.
     - **Emojis**: Use about 4-5 emojis total per post. Use them to qualify the hook/intro line, for bullet points/lists, and a final one at the end. Be playful but use good judgment and taste—it shouldn't feel cluttered, just expressive.
+    - **OUTPUT FORMAT**: Output ONLY the post content. Do NOT include any introductory or concluding remarks like "Here is the post" or "Hope this helps". Start directly with the hook.
     """
 
     try:
@@ -105,6 +106,7 @@ def refine_linkedin_post(current_post, feedback, person_name):
     **Your Task**:
     Rewrite the **Current Post** to address the **User Feedback** while maintaining the voice and style of {person_name}.
     Keep the same formatting rules (no self-intro, thoughtful emojis).
+    **OUTPUT FORMAT**: Output ONLY the refined post content. Do NOT include any introductory remarks.
     """
 
     try:

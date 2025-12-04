@@ -90,30 +90,9 @@ if "post_content" in st.session_state:
     st.subheader("Your Draft")
     
     # Styled container for the post (Light theme, wrapped text)
-    # Using textwrap.dedent or just manual un-indenting to avoid markdown code block interpretation
-    st.markdown(
-        f"""
-<div style="
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 20px;
-    font-family: 'Inter', sans-serif;
-    color: #1a1a1a;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-">
-{st.session_state.post_content}
-</div>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Copy Button using Popover to keep UI clean
-    with st.popover("📋 Copy Text"):
-        st.code(st.session_state.post_content, language="markdown")
-        st.caption("Click the copy icon in the top right of the box above.")
+    # We use st.code because it has a native "Copy" button in the top right.
+    # We have overridden the CSS for .stCode in style.css to make it look like normal text (sans-serif, wrapped).
+    st.code(st.session_state.post_content, language=None)
 
     st.markdown("---")
     st.subheader("Refine this post")

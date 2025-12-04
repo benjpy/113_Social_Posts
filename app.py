@@ -81,10 +81,69 @@ if generate_btn:
                     if "Error" in post_content:
                         st.error(post_content)
                     else:
+                        st.session_state.post_content = post_content
+                        st.session_state.persona_choice = persona_choice # Store for refinement
                         st.success("Post generated successfully!")
-                        st.subheader("Your Draft")
-                        st.code(post_content, language="markdown")
-                        st.balloons()
+
+# Display Post if it exists in session state
+if "post_content" in st.session_state:
+    st.subheader("Your Draft")
+    
+    # Styled container for the post (Light theme, wrapped text)
+    st.markdown(
+        f"""
+        <div style="
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        ">
+            {st.session_state.post_content}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    # Copy Button (using st.code as a hidden helper or just relying on manual copy for now as st.markdown doesn't have native copy)
+    # User asked for a copy button previously. st.code was good for that but bad for reading.
+    # Compromise: Keep st.code hidden or below? Or just use st.code for the copy function but styled differently?
+    # Actually, st.code forces the "coding font". 
+    # Let's provide a raw text area below for copying if needed, or just let them copy from the div.
+    # The user specifically asked for "not coding font" and "wrapped".
+    # I will add a small "Copy-paste version" expander.
+    
+    with st.expander("View raw text for copying"):
+        st.code(st.session_state.post_content, language="markdown")
+
+    st.markdown("---")
+    st.subheader("Refine this post")
+    
+    feedback = st.text_input(
+        "Are you happy with the result? What should I change?",
+        placeholder="e.g. Make it shorter, add more emojis, make it punchier..."
+    )
+    
+    if st.button("🔄 Refine Post"):
+        if not feedback:
+            st.warning("Please enter some feedback first.")
+        else:
+            with st.spinner("🤖 Refining your post..."):
+                refined_post = utils.refine_linkedin_post(
+                    st.session_state.post_content, 
+                    feedback, 
+                    st.session_state.get("persona_choice", "Sean O'Sullivan")
+                )
+                
+                if "Error" in refined_post:
+                    st.error(refined_post)
+                else:
+                    st.session_state.post_content = refined_post
+                    st.rerun()
 
 # Footer
 st.markdown("---")

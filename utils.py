@@ -71,7 +71,7 @@ def generate_linkedin_post(person_text, article_text, person_name):
     - Include relevant hashtags if the style reference uses them.
     - Keep it engaging and hook-y.
     - **CRITICAL**: Do NOT have the author introduce themselves (e.g., do NOT say "Hi, I'm {person_name}"). Just dive straight into the value/content.
-    - **Emojis**: Use emojis lightly and thoughtfully. Do not overuse them. Place them strategically to emphasize key points or add tone, but keep it professional and aligned with the persona.
+    - **Emojis**: Use about 4-5 emojis total per post. Use them to qualify the hook/intro line, for bullet points/lists, and a final one at the end. Be playful but use good judgment and taste—it shouldn't feel cluttered, just expressive.
     """
 
     try:
@@ -82,3 +82,36 @@ def generate_linkedin_post(person_text, article_text, person_name):
         return response.text
     except Exception as e:
         return f"Error generating post: {str(e)}"
+
+def refine_linkedin_post(current_post, feedback, person_name):
+    """
+    Refines an existing LinkedIn post based on user feedback.
+    """
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        return "Error: GEMINI_API_KEY not found."
+
+    client = genai.Client(api_key=api_key)
+
+    prompt = f"""
+    You are an expert social media manager and ghostwriter for {person_name}.
+
+    **Current Post**:
+    {current_post}
+
+    **User Feedback**:
+    "{feedback}"
+
+    **Your Task**:
+    Rewrite the **Current Post** to address the **User Feedback** while maintaining the voice and style of {person_name}.
+    Keep the same formatting rules (no self-intro, thoughtful emojis).
+    """
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-exp",
+            contents=prompt
+        )
+        return response.text
+    except Exception as e:
+        return f"Error refining post: {str(e)}"

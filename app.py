@@ -47,6 +47,23 @@ with st.container():
             help="Choose a writing style.",
             label_visibility="collapsed"
         )
+        
+        st.markdown("---")
+        st.subheader("3. Post Settings")
+        word_count = st.number_input(
+            "Target Word Count",
+            min_value=50,
+            max_value=500,
+            value=130,
+            step=10,
+            help="Choose the approximate length of your post."
+        )
+        emoji_level = st.select_slider(
+            "Emoji Density",
+            options=["None", "Few", "Many", "Extreme"],
+            value="Few",
+            help="Choose how many emojis should be included."
+        )
 
     with col2:
         st.subheader("2. The Content")
@@ -106,7 +123,13 @@ if generate_btn:
             else:
                 # Generate
                 with st.spinner(f"🤖 Crafting post in {persona_choice}'s style..."):
-                    result = utils.generate_linkedin_post(person_text, article_text, persona_choice)
+                    result = utils.generate_linkedin_post(
+                        person_text, 
+                        article_text, 
+                        persona_choice,
+                        word_count=word_count,
+                        emoji_level=emoji_level
+                    )
                     
                     if "error" in result:
                         st.error(result["error"])
@@ -116,6 +139,8 @@ if generate_btn:
                         st.session_state.cost = result["cost"]
                         st.session_state.total_cost += result["cost"]
                         st.session_state.persona_choice = persona_choice # Store for refinement
+                        st.session_state.word_count = word_count # Store for refinement
+                        st.session_state.emoji_level = emoji_level # Store for refinement
                         st.success("Post generated successfully!")
 
 # Display Post if it exists in session state
@@ -147,7 +172,9 @@ if "post_content" in st.session_state:
                 result = utils.refine_linkedin_post(
                     st.session_state.post_content, 
                     feedback, 
-                    st.session_state.get("persona_choice", "Sean O'Sullivan")
+                    st.session_state.get("persona_choice", "Sean O'Sullivan"),
+                    word_count=st.session_state.get("word_count", 130),
+                    emoji_level=st.session_state.get("emoji_level", "Few")
                 )
                 
                 if "error" in result:

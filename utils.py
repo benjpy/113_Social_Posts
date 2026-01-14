@@ -71,7 +71,7 @@ def _calculate_cost(usage):
     cost = (input_tokens / 1_000_000 * INPUT_RATE) + (output_tokens / 1_000_000 * OUTPUT_RATE)
     return cost
 
-def generate_linkedin_post(person_text, article_text, person_name):
+def generate_linkedin_post(person_text, article_text, person_name, word_count=130, emoji_level="Few"):
     """
     Generates a LinkedIn post using Gemini, mimicking the style of person_text.
     Returns a dictionary with result and usage metrics.
@@ -82,6 +82,14 @@ def generate_linkedin_post(person_text, article_text, person_name):
 
     client = genai.Client(api_key=api_key)
     start_time = time.time()
+
+    # Map emoji level to prompt instructions
+    emoji_instructions = {
+        "None": "Do NOT use any emojis.",
+        "Few": "Use a few emojis (2-3 total) to highlight key points.",
+        "Many": "Use many emojis (around 6-8) to make the post vibrant and engaging.",
+        "Extreme": "Use many expressive emojis throughout the post, including at the start/end and for bullet points."
+    }
 
     prompt = f"""
     You are an expert social media manager and ghostwriter.
@@ -99,14 +107,13 @@ def generate_linkedin_post(person_text, article_text, person_name):
     **Source Content**:
     {article_text[:5000]}
 
-    **Requirements**:
-    - Match the persona strictly.
-    - Use appropriate LinkedIn formatting (line breaks, bullet points if they use them).
-    - Include relevant hashtags if the style reference uses them.
-    - Keep it engaging and hook-y.
+    **Technical Requirements**:
+    - **Target Length**: Approximately {word_count} words.
+    - **Emoji Usage**: {emoji_instructions.get(emoji_level, emoji_instructions["Few"])}
+    - **Persona strictly matched**: Follow {person_name}'s specific voice and quirks.
+    - **Format**: Use LinkedIn-appropriate line breaks and formatting.
     - **CRITICAL**: Do NOT have the author introduce themselves (e.g., do NOT say "Hi, I'm {person_name}"). Just dive straight into the value/content.
-    - **Emojis**: Use about 4-5 emojis total per post. Use them to qualify the hook/intro line, for bullet points/lists, and a final one at the end. Be playful but use good judgment and taste—it shouldn't feel cluttered, just expressive.
-    - **OUTPUT FORMAT**: Output ONLY the post content. Do NOT include any introductory or concluding remarks like "Here is the post" or "Hope this helps". Start directly with the hook.
+    - **OUTPUT FORMAT**: Output ONLY the post content. Do NOT include any introductory or concluding remarks. Start directly with the hook.
     """
 
     try:
@@ -125,7 +132,7 @@ def generate_linkedin_post(person_text, article_text, person_name):
     except Exception as e:
         return {"error": f"Error generating post: {str(e)}"}
 
-def refine_linkedin_post(current_post, feedback, person_name):
+def refine_linkedin_post(current_post, feedback, person_name, word_count=130, emoji_level="Few"):
     """
     Refines an existing LinkedIn post based on user feedback.
     Returns a dictionary with result and usage metrics.
@@ -136,6 +143,14 @@ def refine_linkedin_post(current_post, feedback, person_name):
 
     client = genai.Client(api_key=api_key)
     start_time = time.time()
+
+    # Map emoji level to prompt instructions
+    emoji_instructions = {
+        "None": "Do NOT use any emojis.",
+        "Few": "Use a few emojis (2-3 total) to highlight key points.",
+        "Many": "Use many emojis (around 6-8) to make the post vibrant and engaging.",
+        "Extreme": "Use many expressive emojis throughout the post, including at the start/end and for bullet points."
+    }
 
     prompt = f"""
     You are an expert social media manager and ghostwriter for {person_name}.
@@ -148,7 +163,11 @@ def refine_linkedin_post(current_post, feedback, person_name):
 
     **Your Task**:
     Rewrite the **Current Post** to address the **User Feedback** while maintaining the voice and style of {person_name}.
-    Keep the same formatting rules (no self-intro, thoughtful emojis).
+    
+    **Technical Requirements**:
+    - **Target Length**: Approximately {word_count} words.
+    - **Emoji Usage**: {emoji_instructions.get(emoji_level, emoji_instructions["Few"])}
+    - Keep the same formatting rules (no self-intro).
     **OUTPUT FORMAT**: Output ONLY the refined post content. Do NOT include any introductory remarks.
     """
 

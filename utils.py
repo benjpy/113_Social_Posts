@@ -1,5 +1,6 @@
 import os
 import requests
+import time
 from bs4 import BeautifulSoup
 from google import genai
 from google.genai import types
@@ -58,15 +59,29 @@ def _clean_text(text):
     text = '\n'.join(chunk for chunk in chunks if chunk)
     return text[:10000] # Limit to 10k chars
 
+def _calculate_cost(usage):
+    """Calculates estimated cost based on Gemini 2.5 Flash rates."""
+    # Rates per 1M tokens
+    INPUT_RATE = 0.3
+    OUTPUT_RATE = 2.5
+    
+    input_tokens = usage.prompt_token_count or 0
+    output_tokens = usage.candidates_token_count or 0
+    
+    cost = (input_tokens / 1_000_000 * INPUT_RATE) + (output_tokens / 1_000_000 * OUTPUT_RATE)
+    return cost
+
 def generate_linkedin_post(person_text, article_text, person_name):
     """
     Generates a LinkedIn post using Gemini, mimicking the style of person_text.
+    Returns a dictionary with result and usage metrics.
     """
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        return "Error: GEMINI_API_KEY not found in environment variables."
+        return {"error": "GEMINI_API_KEY not found in environment variables."}
 
     client = genai.Client(api_key=api_key)
+    start_time = time.time()
 
     prompt = f"""
     You are an expert social media manager and ghostwriter.
@@ -99,19 +114,28 @@ def generate_linkedin_post(person_text, article_text, person_name):
             model="gemini-2.5-flash",
             contents=prompt
         )
-        return response.text
+        duration = time.time() - start_time
+        cost = _calculate_cost(response.usage_metadata)
+        
+        return {
+            "text": response.text,
+            "duration": duration,
+            "cost": cost
+        }
     except Exception as e:
-        return f"Error generating post: {str(e)}"
+        return {"error": f"Error generating post: {str(e)}"}
 
 def refine_linkedin_post(current_post, feedback, person_name):
     """
     Refines an existing LinkedIn post based on user feedback.
+    Returns a dictionary with result and usage metrics.
     """
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        return "Error: GEMINI_API_KEY not found."
+        return {"error": "Error: GEMINI_API_KEY not found."}
 
     client = genai.Client(api_key=api_key)
+    start_time = time.time()
 
     prompt = f"""
     You are an expert social media manager and ghostwriter for {person_name}.
@@ -133,6 +157,13 @@ def refine_linkedin_post(current_post, feedback, person_name):
             model="gemini-2.5-flash",
             contents=prompt
         )
-        return response.text
+        duration = time.time() - start_time
+        cost = _calculate_cost(response.usage_metadata)
+        
+        return {
+            "text": response.text,
+            "duration": duration,
+            "cost": cost
+        }
     except Exception as e:
-        return f"Error refining post: {str(e)}"
+        return {"error": f"Error refining post: {str(e)}"}

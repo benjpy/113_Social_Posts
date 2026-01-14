@@ -102,18 +102,24 @@ if generate_btn:
             else:
                 # Generate
                 with st.spinner(f"🤖 Crafting post in {persona_choice}'s style..."):
-                    post_content = utils.generate_linkedin_post(person_text, article_text, persona_choice)
+                    result = utils.generate_linkedin_post(person_text, article_text, persona_choice)
                     
-                    if "Error" in post_content:
-                        st.error(post_content)
+                    if "error" in result:
+                        st.error(result["error"])
                     else:
-                        st.session_state.post_content = post_content
+                        st.session_state.post_content = result["text"]
+                        st.session_state.duration = result["duration"]
+                        st.session_state.cost = result["cost"]
                         st.session_state.persona_choice = persona_choice # Store for refinement
                         st.success("Post generated successfully!")
 
 # Display Post if it exists in session state
 if "post_content" in st.session_state:
     st.subheader("Your Draft")
+    
+    # Display metrics
+    if "duration" in st.session_state and "cost" in st.session_state:
+        st.caption(f"⏱️ {st.session_state.duration:.1f}s | 💸 Est. cost: ${st.session_state.cost:.5f}")
     
     # Styled container for the post (Light theme, wrapped text)
     # We use st.code because it has a native "Copy" button in the top right.
@@ -133,16 +139,18 @@ if "post_content" in st.session_state:
             st.warning("Please enter some feedback first.")
         else:
             with st.spinner("🤖 Refining your post..."):
-                refined_post = utils.refine_linkedin_post(
+                result = utils.refine_linkedin_post(
                     st.session_state.post_content, 
                     feedback, 
                     st.session_state.get("persona_choice", "Sean O'Sullivan")
                 )
                 
-                if "Error" in refined_post:
-                    st.error(refined_post)
+                if "error" in result:
+                    st.error(result["error"])
                 else:
-                    st.session_state.post_content = refined_post
+                    st.session_state.post_content = result["text"]
+                    st.session_state.duration = result["duration"]
+                    st.session_state.cost = result["cost"]
                     st.rerun()
 
 # Footer

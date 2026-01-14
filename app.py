@@ -16,11 +16,15 @@ def load_css():
 
 load_css()
 
+# Initialize Session State
+if "total_cost" not in st.session_state:
+    st.session_state.total_cost = 0.0
+
 # Header
 st.title("✍️ LinkedIn Ghostwriter")
 st.markdown("""
     <p style='font-size: 1.1rem; color: #666; margin-bottom: 2rem;'>
-        Transform any article into a viral LinkedIn post, written in the exact style of your favorite creator.
+        Transform any article into a LinkedIn post using preset styles.
     </p>
 """, unsafe_allow_html=True)
 
@@ -110,6 +114,7 @@ if generate_btn:
                         st.session_state.post_content = result["text"]
                         st.session_state.duration = result["duration"]
                         st.session_state.cost = result["cost"]
+                        st.session_state.total_cost += result["cost"]
                         st.session_state.persona_choice = persona_choice # Store for refinement
                         st.success("Post generated successfully!")
 
@@ -119,7 +124,7 @@ if "post_content" in st.session_state:
     
     # Display metrics
     if "duration" in st.session_state and "cost" in st.session_state:
-        st.caption(f"⏱️ {st.session_state.duration:.1f}s | 💸 Est. cost: ${st.session_state.cost:.5f}")
+        st.caption(f"⏱️ {st.session_state.duration:.1f}s | 💸 Est. cost: ${st.session_state.cost:.5f} (Total Session: ${st.session_state.total_cost:.5f})")
     
     # Styled container for the post (Light theme, wrapped text)
     # We use st.code because it has a native "Copy" button in the top right.
@@ -151,6 +156,7 @@ if "post_content" in st.session_state:
                     st.session_state.post_content = result["text"]
                     st.session_state.duration = result["duration"]
                     st.session_state.cost = result["cost"]
+                    st.session_state.total_cost += result["cost"]
                     st.rerun()
 
 # Footer

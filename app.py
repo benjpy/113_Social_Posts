@@ -30,9 +30,9 @@ with st.container():
     
     # Define Persona Mapping
     PERSONA_MAP = {
-        "SOSV ([link](https://github.com/benjpy/113_Social_Posts/blob/main/sosv.txt))": "sosv.txt",
-        "Sean O'Sullivan ([link](https://github.com/benjpy/113_Social_Posts/blob/main/sean.txt))": "sean.txt",
-        "Po Bronson ([link](https://github.com/benjpy/113_Social_Posts/blob/main/po.txt))": "po.txt"
+        "SOSV ([link](https://raw.githubusercontent.com/benjpy/113_Social_Posts/main/sosv.txt))": "sosv.txt",
+        "Sean O'Sullivan ([link](https://raw.githubusercontent.com/benjpy/113_Social_Posts/main/sean.txt))": "sean.txt",
+        "Po Bronson ([link](https://raw.githubusercontent.com/benjpy/113_Social_Posts/main/po.txt))": "po.txt"
     }
 
     with col1:

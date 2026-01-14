@@ -1,0 +1,219 @@
+SOSV LinkedIn Style Guide
+
+Institutional Voice (Portfolio, Platform, and Mission Updates)
+
+1. OVERALL VOICE & TONE
+
+Authoritative, mission-driven, and quietly optimistic.
+SOSV writes as a long-term builder of systems, not a hype-driven investor or cheerleader.
+
+The tone sits between the two leader voices:
+	•	More objective and declarative than Po’s reflective, first-person storytelling
+	•	Less personal and opinionated than Sean’s founder-led commentary
+
+Key characteristics
+	•	Confident but restrained
+	•	Evidence-based, not promotional
+	•	Curious, constructive, and future-oriented
+	•	Human-centered without becoming sentimental
+	•	Technical, but always accessible
+
+Avoid sounding like:
+	•	A PR firm
+	•	A growth marketer
+	•	A crypto-style VC feed
+
+⸻
+
+2. PURPOSE OF SOSV POSTS
+
+Each post should clearly do at least one of the following:
+	1.	Signal meaningful progress in science, engineering, or clinical development
+	2.	Connect a portfolio milestone to a broader system-level challenge
+	3.	Educate the market on how hard tech actually advances
+	4.	Reinforce SOSV’s role as a patient, technical, early partner
+
+SOSV posts are not about excitement alone—they are about credibility and momentum.
+
+⸻
+
+3. POST LENGTH & STRUCTURE
+
+Typical length:
+	•	120–220 words
+	•	6–10 short paragraphs or bullets
+	•	Designed for skimming, not essays
+
+Standard structure (recommended):
+
+1. Framing statement or insight (1–2 lines)
+
+A grounded observation or contrast:
+	•	“Battery chemistry has advanced. Battery manufacturing hasn’t.”
+	•	“AI-assisted labs are starting to reshape materials science.”
+
+2. News or milestone
+
+Clearly state what happened:
+	•	Funding raised
+	•	Study launched
+	•	Contract awarded
+	•	Technical breakthrough achieved
+
+3. How it works / Why it matters
+
+Explain the innovation plainly:
+	•	No hype
+	•	No unnecessary jargon
+	•	Focus on mechanism, not marketing
+
+4. Evidence or traction
+
+Concrete signals:
+	•	Clinical study design
+	•	Government contract
+	•	Performance metrics
+	•	Early validation
+
+5. Broader implication
+
+Zoom out:
+	•	Industry shift
+	•	New design paradigm
+	•	Change in cost, access, or scalability
+
+6. Forward-looking close
+
+Measured optimism:
+	•	“Momentum is building.”
+	•	“An important step toward…”
+	•	“Still early—but meaningful.”
+
+⸻
+
+4. LANGUAGE & LINGUISTIC STYLE
+
+Sentence style
+	•	Short to medium length
+	•	Declarative and clear
+	•	Occasional contrast framing (“Instead of…”, “Despite…”)
+
+Preferred verbs
+	•	Building
+	•	Executing
+	•	Advancing
+	•	Integrating
+	•	Evaluating
+	•	Unlocking
+	•	Reducing
+	•	Enabling
+
+Avoid
+	•	“Revolutionary,” “game-changing,” “disruptive”
+	•	Exclamation-heavy enthusiasm
+	•	Overuse of “proud,” “thrilled,” “excited”
+
+⸻
+
+5. EMOJI USAGE
+
+Sparse, functional, and consistent
+
+Emojis are used as visual anchors, not decoration.
+
+Commonly used emojis
+	•	🚀 Momentum / progress
+	•	🧪 Science, labs, experimentation
+	•	🧠 Neuroscience, AI, cognition
+	•	🔋 Energy, batteries, materials
+	•	🧬 Biology, biotech, diagnostics
+	•	📊 Data, results, studies
+	•	👥 People, teams, leadership
+	•	📖 Reading / articles / press
+
+Rules
+	•	1–3 emojis per post
+	•	Never mid-sentence
+	•	Usually at section headers or bullets
+
+⸻
+
+6. TAGGING & LINKING STRATEGY
+
+SOSV posts should actively network the ecosystem.
+
+Tag when relevant
+	•	Portfolio companies
+	•	SOSV programs (IndieBio, HAX, etc.)
+	•	Co-investors
+	•	Key executives, founders, or board members
+	•	Institutions (universities, government agencies, regulators)
+
+Best practice
+	•	Tag on first mention only
+	•	Do not over-tag
+	•	Prioritize relevance over reach
+
+External links
+	•	Press releases
+	•	ClinicalTrials.gov
+	•	Reputable media (Endpoints, MIT Tech Review, etc.)
+	•	LinkedIn short links are acceptable
+
+⸻
+
+7. HASHTAGS
+
+3–6 hashtags per post
+Placed at the end of the post.
+
+Core SOSV hashtags
+	•	#DeepTech
+	•	#HardTech
+	•	#ClimateTech
+	•	#Biotech
+	•	#MedTech
+	•	#AdvancedManufacturing
+
+Contextual / topic-specific
+	•	#EnergyStorage
+	•	#AdditiveManufacturing
+	•	#DefenseTech
+	•	#ClinicalTrials
+	•	#NonInvasiveCare
+	•	#MaterialsScience
+	•	#AIinScience
+
+Avoid trending or generic tags unless directly relevant.
+
+⸻
+
+8. POINT OF VIEW
+	•	Use third-person institutional voice (“SOSV,” “we” sparingly)
+	•	Do not adopt a personal “I” voice
+	•	The post represents platform-level conviction, not individual opinion
+
+⸻
+
+9. WHAT SOSV POSTS ARE NOT
+	•	Not a founder diary
+	•	Not a fundraising announcement alone
+	•	Not a motivational post
+	•	Not thought leadership without substance
+
+Every post should answer:
+
+“What real work is happening here—and why does it matter now?”
+
+⸻
+
+10. FINAL CHECKLIST BEFORE POSTING
+
+Before publishing, confirm:
+	•	Is the milestone concrete?
+	•	Is the explanation understandable to a smart non-expert?
+	•	Are people and partners credited?
+	•	Is optimism grounded in evidence?
+	•	Would this still read well in 12–24 months?
+
+If yes, it fits the SOSV voice.

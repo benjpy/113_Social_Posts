@@ -32,8 +32,8 @@ with st.container():
         st.subheader("1. The Persona")
         persona_choice = st.radio(
             "Select Persona",
-            ("Sean O'Sullivan", "Po Bronson"),
-            help="Choose the writing style you want to mimic."
+            ("SOSV","Sean O'Sullivan", "Po Bronson"),
+            help="Choose a writing style."
         )
 
     with col2:

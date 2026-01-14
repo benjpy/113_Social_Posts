@@ -49,24 +49,7 @@ with st.container():
         )
         
         st.markdown("---")
-        st.subheader("3. Post Settings")
-        word_count = st.number_input(
-            "Target Word Count",
-            min_value=50,
-            max_value=500,
-            value=130,
-            step=10,
-            help="Choose the approximate length of your post."
-        )
-        emoji_level = st.select_slider(
-            "Emoji Density",
-            options=["None", "Few", "Many", "Extreme"],
-            value="Few",
-            help="Choose how many emojis should be included."
-        )
-
-    with col2:
-        st.subheader("2. The Content")
+        st.subheader("2. Content")
         input_tab1, input_tab2 = st.tabs(["🔗 URL", "📝 Text"])
         
         with input_tab1:
@@ -86,6 +69,23 @@ with st.container():
                 height=150,
                 label_visibility="collapsed"
             )
+
+    with col2:
+        st.subheader("3. Post Settings")
+        word_count = st.number_input(
+            "Target Word Count",
+            min_value=50,
+            max_value=500,
+            value=100,
+            step=10,
+            help="Choose the approximate length of your post."
+        )
+        emoji_level = st.select_slider(
+            "Emoji Density",
+            options=["None", "Few", "Many", "Extreme"],
+            value="Few",
+            help="Choose how many emojis should be included."
+        )
             
         st.write("") # Add a little spacing
         generate_btn = st.button("✨ Generate Post")
@@ -149,7 +149,8 @@ if "post_content" in st.session_state:
     
     # Display metrics
     if "duration" in st.session_state and "cost" in st.session_state:
-        st.caption(f"⏱️ {st.session_state.duration:.1f}s | 💸 Est. cost: ${st.session_state.cost:.5f} (Total Session: ${st.session_state.total_cost:.5f})")
+        # Use \$ to avoid Streamlit interpreting $ as LaTeX, preventing the gray background glitch
+        st.caption(f"⏱️ {st.session_state.duration:.1f}s | 💸 Est. cost: \${st.session_state.cost:.5f} (Total Session: \${st.session_state.total_cost:.5f})")
     
     # Styled container for the post (Light theme, wrapped text)
     # We use st.code because it has a native "Copy" button in the top right.

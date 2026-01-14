@@ -55,6 +55,7 @@ with st.container():
                 help="URL to the article you want to rewrite.",
                 label_visibility="collapsed"
             )
+            use_reader = st.checkbox("Use Reader Mode (bypasses consent windows)", value=True, help="Uses Jina Reader to extract clean text from URLs that might have consent windows.")
         
         with input_tab2:
             raw_text = st.text_area(
@@ -90,7 +91,7 @@ if generate_btn:
             if raw_text.strip():
                 article_text = raw_text.strip()
             elif article_url.strip():
-                article_text = utils.fetch_text_from_url(article_url)
+                article_text = utils.fetch_text_from_url(article_url, use_reader=use_reader)
             else:
                 st.error("Please provide either a Source URL or paste the Article Text.")
                 st.stop()

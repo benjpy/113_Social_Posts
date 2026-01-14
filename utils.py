@@ -7,25 +7,35 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def fetch_text_from_url(url):
+def fetch_text_from_url(url, use_reader=False):
     """
     Fetches and extracts the main text content from a given URL.
+    Optionally uses r.jina.ai (Reader Mode) to bypass consent walls.
     """
     try:
+        target_url = url
+        if use_reader:
+            # Prepend r.jina.ai to the URL
+            target_url = f"https://r.jina.ai/{url}"
+            
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(target_url, headers=headers, timeout=15)
         response.raise_for_status()
         
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Remove script and style elements
-        for script in soup(["script", "style", "nav", "footer", "header"]):
-            script.decompose()
+        # If using Jina Reader, it returns clean markdown/text directly
+        if use_reader:
+            text = response.text
+        else:
+            soup = BeautifulSoup(response.content, 'html.parser')
             
-        # Get text
-        text = soup.get_text()
+            # Remove script and style elements
+            for script in soup(["script", "style", "nav", "footer", "header"]):
+                script.decompose()
+                
+            # Get text
+            text = soup.get_text()
         
         # Break into lines and remove leading/trailing space on each
         lines = (line.strip() for line in text.splitlines())

@@ -46,22 +46,34 @@ with st.container():
 
     with col2:
         st.subheader("2. The Content")
-        article_url = st.text_input(
-            "Source Article URL",
-            placeholder="e.g. https://techcrunch.com/...",
-            help="URL to the article you want to rewrite."
-        )
+        input_tab1, input_tab2 = st.tabs(["🔗 URL", "📝 Text"])
+        
+        with input_tab1:
+            article_url = st.text_input(
+                "Source Article URL",
+                placeholder="e.g. https://techcrunch.com/...",
+                help="URL to the article you want to rewrite.",
+                label_visibility="collapsed"
+            )
+        
+        with input_tab2:
+            raw_text = st.text_area(
+                "Paste Article Text",
+                placeholder="Paste the article content here...",
+                help="Paste the full text of the article you want to rewrite.",
+                height=150,
+                label_visibility="collapsed"
+            )
+            
         st.write("") # Add a little spacing
         generate_btn = st.button("✨ Generate Post")
 
 # Logic
 if generate_btn:
-    if not article_url:
-        st.error("Please provide the Source Article URL.")
-    elif not os.getenv("GEMINI_API_KEY"):
+    if not os.getenv("GEMINI_API_KEY"):
         st.error("⚠️ GEMINI_API_KEY not found. Please check your .env file.")
     else:
-        with st.spinner("🔍 Reading persona and content..."):
+        with st.spinner("🔍 Preparing content..."):
             # Determine file to read from mapping
             filename = PERSONA_MAP.get(persona_choice)
             
@@ -73,11 +85,18 @@ if generate_btn:
                 st.error(f"Error: Could not find {filename}. Please ensure it exists in the project directory.")
                 st.stop()
 
-            # Fetch article content
-            article_text = utils.fetch_text_from_url(article_url)
+            # Process Content
+            article_text = ""
+            if raw_text.strip():
+                article_text = raw_text.strip()
+            elif article_url.strip():
+                article_text = utils.fetch_text_from_url(article_url)
+            else:
+                st.error("Please provide either a Source URL or paste the Article Text.")
+                st.stop()
             
-            if "Error" in article_text:
-                st.error(f"Could not read Source URL: {article_text}")
+            if not article_text or "Error" in article_text:
+                st.error(f"Could not process content: {article_text if article_text else 'No content found'}")
             else:
                 # Generate
                 with st.spinner(f"🤖 Crafting post in {persona_choice}'s style..."):

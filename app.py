@@ -147,6 +147,6 @@ if "post_content" in st.session_state:
 # Footer
 st.markdown("---")
 st.markdown(
-    "<div style='text-align: center; color: #888; font-size: 0.9rem;'>Powered by Google Gemini 2.0 Flash</div>",
+    "<div style='text-align: center; color: #888; font-size: 0.9rem;'>Powered by Google Gemini 2.5 Flash</div>",
     unsafe_allow_html=True
 )

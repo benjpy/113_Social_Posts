@@ -87,7 +87,7 @@ def generate_linkedin_post(person_text, article_text, person_name):
 
     try:
         response = client.models.generate_content(
-            model="gemini-2.0-flash-exp",
+            model="gemini-2.5-flash",
             contents=prompt
         )
         return response.text
@@ -121,7 +121,7 @@ def refine_linkedin_post(current_post, feedback, person_name):
 
     try:
         response = client.models.generate_content(
-            model="gemini-2.0-flash-exp",
+            model="gemini-2.5-flash",
             contents=prompt
         )
         return response.text

@@ -36,11 +36,12 @@ with st.container():
     }
 
     with col1:
-        st.subheader("1. The Persona")
+        st.subheader("1. Select Persona")
         persona_choice = st.radio(
             "Select Persona",
             options=list(PERSONA_MAP.keys()),
-            help="Choose a writing style."
+            help="Choose a writing style.",
+            label_visibility="collapsed"
         )
 
     with col2:

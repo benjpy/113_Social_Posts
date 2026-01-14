@@ -28,11 +28,18 @@ st.markdown("""
 with st.container():
     col1, col2 = st.columns(2)
     
+    # Define Persona Mapping
+    PERSONA_MAP = {
+        "SOSV ([link](https://github.com/benjpy/113_Social_Posts/blob/main/sosv.txt))": "sosv.txt",
+        "Sean O'Sullivan ([link](https://github.com/benjpy/113_Social_Posts/blob/main/sean.txt))": "sean.txt",
+        "Po Bronson ([link](https://github.com/benjpy/113_Social_Posts/blob/main/po.txt))": "po.txt"
+    }
+
     with col1:
         st.subheader("1. The Persona")
         persona_choice = st.radio(
             "Select Persona",
-            ("SOSV","Sean O'Sullivan", "Po Bronson"),
+            options=list(PERSONA_MAP.keys()),
             help="Choose a writing style."
         )
 
@@ -54,11 +61,8 @@ if generate_btn:
         st.error("⚠️ GEMINI_API_KEY not found. Please check your .env file.")
     else:
         with st.spinner("🔍 Reading persona and content..."):
-            # Determine file to read
-            if persona_choice == "Sean O'Sullivan":
-                filename = "sean.txt"
-            else:
-                filename = "po.txt"
+            # Determine file to read from mapping
+            filename = PERSONA_MAP.get(persona_choice)
             
             # Read persona file
             try:

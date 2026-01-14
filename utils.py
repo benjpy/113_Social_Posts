@@ -11,43 +11,52 @@ def fetch_text_from_url(url, use_reader=False):
     """
     Fetches and extracts the main text content from a given URL.
     Optionally uses r.jina.ai (Reader Mode) to bypass consent walls.
+    Falls back to standard BeautifulSoup fetch if Reader Mode fails.
     """
-    try:
-        target_url = url
-        if use_reader:
-            # Prepend r.jina.ai to the URL
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    
+    # 1. Try Reader Mode if enabled
+    if use_reader:
+        try:
             target_url = f"https://r.jina.ai/{url}"
-            
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        }
-        response = requests.get(target_url, headers=headers, timeout=15)
+            response = requests.get(target_url, headers=headers, timeout=15)
+            response.raise_for_status()
+            text = response.text
+            return _clean_text(text)
+        except Exception as e:
+            # If Reader Mode fails, we'll fall through to standard fetch
+            print(f"Reader Mode failed ({str(e)}), falling back to standard fetch...")
+            pass
+
+    # 2. Standard BeautifulSoup Fetch (also used for fallback)
+    try:
+        response = requests.get(url, headers=headers, timeout=12)
         response.raise_for_status()
         
-        # If using Jina Reader, it returns clean markdown/text directly
-        if use_reader:
-            text = response.text
-        else:
-            soup = BeautifulSoup(response.content, 'html.parser')
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Remove script and style elements
+        for script in soup(["script", "style", "nav", "footer", "header"]):
+            script.decompose()
             
-            # Remove script and style elements
-            for script in soup(["script", "style", "nav", "footer", "header"]):
-                script.decompose()
-                
-            # Get text
-            text = soup.get_text()
-        
-        # Break into lines and remove leading/trailing space on each
-        lines = (line.strip() for line in text.splitlines())
-        # Break multi-headlines into a line each
-        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-        # Drop blank lines
-        text = '\n'.join(chunk for chunk in chunks if chunk)
-        
-        return text[:10000] # Limit to 10k chars to avoid token limits if it's huge
+        # Get text
+        text = soup.get_text()
+        return _clean_text(text)
         
     except Exception as e:
         return f"Error fetching URL: {str(e)}"
+
+def _clean_text(text):
+    """Internal helper to clean up extracted text."""
+    # Break into lines and remove leading/trailing space on each
+    lines = (line.strip() for line in text.splitlines())
+    # Break multi-headlines into a line each
+    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    # Drop blank lines
+    text = '\n'.join(chunk for chunk in chunks if chunk)
+    return text[:10000] # Limit to 10k chars
 
 def generate_linkedin_post(person_text, article_text, person_name):
     """

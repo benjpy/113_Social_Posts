@@ -98,6 +98,7 @@ if generate_btn:
             
             if not article_text or "Error" in article_text:
                 st.error(f"Could not process content: {article_text if article_text else 'No content found'}")
+                st.info("💡 **Tip**: If the URL is blocked or restricted, try copying the article text and pasting it directly into the **📝 Text** tab above.")
             else:
                 # Generate
                 with st.spinner(f"🤖 Crafting post in {persona_choice}'s style..."):
